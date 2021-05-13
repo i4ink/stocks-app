@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+{% if empty %}
+	<h2 style="text-align: center;">{{ empty }}</h2>
+{% endif %}
+
+{% if tickers %}
+	{% if tickers == "error..." %}
+		There was a problem with your ticker symbol, please try again...
+	{% else %}
+
+    {% for ticker in tickers %}
+		
+		<h1>{{ ticker.company }}</h1><br/>
+		Price: ${{ ticker.stockPrice }}<br/>
+		quoteType: ${{ ticker.quoteType }}<br/>
+		Previous Close: {{ ticker.previousClose }}<br/>
+		Market Cap: {{ ticker.marketCap }}<br/>
+		50Wk Range: {{ ticker.fiftyTwoWeekRange }}<br/>
+		PE: {{ ticker.trailingPE }}<br/>
+		bidSize: {{ ticker.bidSize }}<br/>
+		askSize: {{ ticker.askSize }}<br/>
+
+    {% endfor %}
+
+		
+
+	{% endif %}
+{% endif %}
+
+{% endblock%}

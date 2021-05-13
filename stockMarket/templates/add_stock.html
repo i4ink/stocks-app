@@ -1,0 +1,58 @@
+
+{% extends 'base.html' %}
+
+{% block content%}
+<h2><b>Add Stock</b></h2>
+
+<!-- <form action="{% url 'add_stock' %}" class="d-flex form-inline my-2 my-lg-0" method="POST"> -->
+<form action="{% url 'add_stock' %}" class="row g-2" method="POST">
+    {% csrf_token %}
+    <input class="col-auto" type="search" placeholder="Add To Portfolio" aria-label="Search" name="ticker">
+    &nbsp;
+    <button class="btn btnstyle btn-outline-secondary col-auto" type="submit">Add</button>
+</form>
+<br/> <br/>
+
+<table class="table table-primary table-striped table-hover table-bordered table-responsive ">
+    <!-- to avoid horizontal scrool use the below div format -->
+<!-- <table class="table table-primary table-striped table-hover table-bordered "> -->
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Company Name</th>
+      <th scope="col">Ticker Symbol</th>
+      <th scope="col">Stock Price</th>
+      <th scope="col">Previous Close</th>
+      <th scope="col">Market Cap</th>
+      <th scope="col">PE</th>
+      <th scope="col">52 Week Range</th>
+      <th scope="col">Bid-Ask Size</th>
+      <th scope="col">Quote Type</th>
+      <th scope="col">Delete Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+{% if tickers %}
+
+
+        {% for symb,ticker in zipped_data %}
+            <tr>
+            <th scope="row">{{ ticker.company }}</th>
+            <td>{{ ticker.symbol }}</td>
+            <td>${{ ticker.stockPrice }}</td>
+            <td>${{ ticker.previousClose }}</td>
+            <td>${{ ticker.marketCap }}</td>
+            <td>${{ ticker.trailingPE }}</td>
+            <td>${{ ticker.fiftyTwoWeekRange }}</td>
+            <td>{{ ticker.bidSize }} - {{ticker.askSize}}</td>
+            <td>{{ ticker.quoteType }}</td>
+            <td><a href="{% url 'delete' symb.id %}">delete</a></td>
+            </tr>
+        {% endfor %}
+
+  </tbody>
+</table>
+<!-- this endif should be places after the end of table only -->
+{% endif%}
+
+
+{% endblock%}
