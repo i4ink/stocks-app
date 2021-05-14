@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 # use pip install python-decouple for below module ( Warning!! ---- don't install only decouple, if it already exists then uninstall it)
 from decouple import config
+# for heroku setup
+import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -127,3 +129,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# for heroku setup
+# Activate Django-Heroku.
+django_heroku.settings(locals())
+
