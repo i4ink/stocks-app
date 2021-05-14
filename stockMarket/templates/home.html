@@ -14,14 +14,18 @@
     {% for ticker in tickers %}
 		
 		<h1>{{ ticker.company }}</h1><br/>
-		Price: ${{ ticker.stockPrice }}<br/>
-		quoteType: ${{ ticker.quoteType }}<br/>
+		Price : ${{ ticker.stockPrice }}<br/>
+		QuoteType : ${{ ticker.quoteType }}<br/>
 		Previous Close: {{ ticker.previousClose }}<br/>
-		Market Cap: {{ ticker.marketCap }}<br/>
-		52Wk Range: {{ ticker.fiftyTwoWeekRange }}<br/>
-		PE: {{ ticker.trailingPE }}<br/>
-		bidSize: {{ ticker.bidSize }}<br/>
-		askSize: {{ ticker.askSize }}<br/><br/>
+		Market Cap : {{ ticker.marketCap }}<br/>
+		52Wk Range : {{ ticker.fiftyTwoWeekRange }}<br/>
+		PE : {{ ticker.trailingPE }}<br/>
+		BidSize : {{ ticker.bidSize }}<br/>
+		Revenue : {{ ticker.revenue }}<br/>
+		Market Volume : {{ ticker.marketVolume }}<br/>
+		Price To Sales : {{ ticker.priceToSales }}<br/>
+		Earning Per Sale : {{ ticker.epsTrailingTwelveMonths }}<br/>
+		AskSize : {{ ticker.askSize }}<br/><br/>
 
     {% endfor %}
 

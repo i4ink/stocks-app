@@ -39,7 +39,7 @@ def home(request):
 
         try:
             res = json.loads(response.content)
-            print('length = ', len(res['quoteResponse']['result']))
+            # print('length = ', len(res['quoteResponse']['result']))
             if len(res['quoteResponse']['result']) > 0 :
                 # print('i am here\n')
                 # list to store key value pair company wise
@@ -61,6 +61,12 @@ def home(request):
                     temp['fiftyTwoWeekLow'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekLow')
                     temp['fiftyTwoWeekHigh'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekHigh')
                     temp['fiftyTwoWeekRange'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekRange')
+                    temp['floatShares'] = res['quoteResponse']['result'][i].get('floatShares')
+                    temp['marketVolume'] = res['quoteResponse']['result'][i].get('regularMarketVolume')
+                    temp['priceToSales'] = res['quoteResponse']['result'][i].get('priceToSales')
+                    temp['revenue'] = res['quoteResponse']['result'][i].get('revenue')
+                    temp['pegRation'] = res['quoteResponse']['result'][i].get('pegRation')
+                    temp['epsTrailingTwelveMonths'] = res['quoteResponse']['result'][i].get('epsTrailingTwelveMonths')
                     tickers.append(temp)
 
                 # to check output in console
@@ -72,7 +78,7 @@ def home(request):
                 context['tickers'] = tickers
 
             else:
-                print('i an in the error\n')
+                print('in the error\n')
                 context['tickers'] = 'error...'
 
         except Exception as e:
@@ -170,6 +176,7 @@ def add_stock(request):
                         temp['priceToSales'] = res['quoteResponse']['result'][i].get('priceToSales')
                         temp['revenue'] = res['quoteResponse']['result'][i].get('revenue')
                         temp['pegRation'] = res['quoteResponse']['result'][i].get('pegRation')
+                        temp['epsTrailingTwelveMonths'] = res['quoteResponse']['result'][i].get('epsTrailingTwelveMonths')
                         output.append(temp)
 
                     # to check output in console

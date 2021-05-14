@@ -32,13 +32,13 @@
             <a class="nav-link" href="{% url 'add_stock' %}">Manage stock</a>
             </li>
         </ul>
-        <form action="{% url 'home' %}" class="form-inline my-auto" method="POST" required minlength="1" maxlength="150">
+        <form action="{% url 'home' %}" class="form-inline my-auto" method="POST" required >
             {% csrf_token %}
             <!-- used d-flex from bootstrap to make two inline form input box in navbar -->
             <div class="d-flex flex-row bd-highlight ">
             <!-- <div class="d-flex justify-content-end"> -->
                 <!-- <input class="form-control mx-auto mr-sm-2" type="search" placeholder="Enter latitude" aria-label="Search" name="latitude"> -->
-                <input class="form-control mr-sm-2" id="txt" type="search" placeholder="Get stock quote" aria-label="Search" name="ticker">
+                <input class="form-control mr-sm-2" id="txt" type="text" placeholder="Get stock quote" aria-label="Search" name="ticker">
                 &nbsp;
                 <button  class=" btnstyle btn btn-outline-secondary my-2 my-sm-0" onclick="return Validate()" type="submit">Search</button>
             </div>
@@ -47,7 +47,7 @@
           <script type="text/javascript">
             function Validate() {
                 var txt = document.getElementById("txt").value;
-                if (txt.length < 1 ) {
+                if (txt.length < 1) {
                     alert("please enter something!!");
                     return false;
                 }
@@ -66,7 +66,7 @@
             }
 
             function isAlpha(str) {
-              return /^[a-zA-Z,]+$/.test(str);
+              return /^[a-zA-Z, ]+$/.test(str);
             }
             </script>
 

@@ -5,17 +5,17 @@
 <h2><b>Add Stock</b></h2>
 
 <!-- <form action="{% url 'add_stock' %}" class="d-flex form-inline my-2 my-lg-0" method="POST"> -->
-<form action="{% url 'add_stock' %}" class="row g-2" method="POST" required minlength="1" maxlength="150">
+<form action="{% url 'add_stock' %}" class="row g-2" method="POST" required >
     {% csrf_token %}
-    <input class="col-auto" type="search" id="txt" placeholder="Add To Portfolio" aria-label="Search" name="ticker">
+    <input class="col-auto" id="txte" type="search"  placeholder="Add To Portfolio" aria-label="Search" name="ticker">
     &nbsp;
-    <button class="btn btnstyle btn-outline-secondary col-auto" onclick="return Validate()" type="submit">Add</button>
+    <button class="btn btnstyle btn-outline-secondary col-auto" onclick="return ValidateStock()" type="submit">Add</button>
 </form>
 
           <script type="text/javascript">
-            function Validate() {
-                var txt = document.getElementById("txt").value;
-                if (txt.length < 1 ) {
+            function ValidateStock() {
+                var txt = document.getElementById("txte").value;
+                if (txt.length < 1) {
                     alert("please enter something!!");
                     return false;
                 }
@@ -31,10 +31,6 @@
                 }
 
                 return true;
-            }
-
-            function isAlpha(str) {
-              return /^[a-zA-Z,]+$/.test(str);
             }
             </script>
 
@@ -54,7 +50,8 @@
         <th scope="col">PE</th>
         <th scope="col">52 Week Range</th>
         <th scope="col">Bid-Ask Size</th>
-        <th scope="col">Quote Type</th>
+        <th scope="col">Revenue</th>
+        <th scope="col">Earning Per Sale</th>
         <th scope="col">Delete Stock</th>
       </tr>
     </thead>
@@ -72,7 +69,8 @@
               <td>${{ ticker.trailingPE }}</td>
               <td>${{ ticker.fiftyTwoWeekRange }}</td>
               <td>{{ ticker.bidSize }} - {{ticker.askSize}}</td>
-              <td>{{ ticker.quoteType }}</td>
+              <td>${{ ticker.revenue }}</td>
+              <td>${{ ticker.epsTrailingTwelveMonths }}</td>
               <td><a href="{% url 'delete' symb.id %}">delete</a></td>
               </tr>
           {% endfor %}
