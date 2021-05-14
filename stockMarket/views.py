@@ -107,6 +107,7 @@ def add_stock(request):
         symbols = ''
         ids = []
         for item in tickers:
+            # print('item id = ',item.id)
             ids.append(item)
             symbols += str(item)+','
         symbols = symbols[:-1]
@@ -137,43 +138,53 @@ def add_stock(request):
             # print(length_of_ticker)
 
             res = json.loads(response.content)
-            # print('length = ', len(res['quoteResponse']['result']))
-            if len(res['quoteResponse']['result']) > 0 :
-                # print('i am here\n')
-                # list to store key value pair company wise
-                # tickers = []
-                # retriving important results from the api call response
-                for i in range(0,length_of_ticker):
-                    temp = {}
-                    temp['symbol'] = res['quoteResponse']['result'][i].get('symbol')
-                    temp['company'] = res['quoteResponse']['result'][i].get('longName')
-                    temp['quoteType'] = res['quoteResponse']['result'][i].get('quoteType')
-                    temp['currency'] = res['quoteResponse']['result'][i].get('currency')
-                    temp['stockPrice'] = res['quoteResponse']['result'][i].get('regularMarketPrice')
-                    temp['previousClose'] = res['quoteResponse']['result'][i].get('regularMarketPreviousClose')
-                    temp['bidSize'] = res['quoteResponse']['result'][i].get('bidSize')
-                    temp['askSize'] = res['quoteResponse']['result'][i].get('askSize')
-                    temp['trailingPE'] = res['quoteResponse']['result'][i].get('trailingPE')
-                    temp['forwardPE'] = res['quoteResponse']['result'][i].get('forwardPE')
-                    temp['marketCap'] = res['quoteResponse']['result'][i].get('marketCap')
-                    temp['fiftyTwoWeekLow'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekLow')
-                    temp['fiftyTwoWeekHigh'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekHigh')
-                    temp['fiftyTwoWeekRange'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekRange')
-                    output.append(temp)
-
-                # to check output in console
-                # for elements in output:
-                    # for key, val in elements.items():
-                        # print(key,'->', val)
-                    # print()
-
-                # context['tickers'] = tickers
-
+            # print('len of request = ', length_of_ticker, '------len of response = ', len(res['quoteResponse']['result']))
+            if length_of_ticker > len(res['quoteResponse']['result']):
+                messages.success(request, 'Invalid input deleting this stock')
+                return delete(request, ids[len(ids)-1].id)
             else:
-                print('in the error\n')
-                # context['tickers'] = 'error...'
-                # output.append({'error':'error...'})
-                err = 'error...'
+                # print('length = ', len(res['quoteResponse']['result']))
+                if len(res['quoteResponse']['result']) > 0 :
+                    # print('i am here\n')
+                    # list to store key value pair company wise
+                    # tickers = []
+                    # retriving important results from the api call response
+                    for i in range(0,length_of_ticker):
+                        temp = {}
+                        temp['symbol'] = res['quoteResponse']['result'][i].get('symbol')
+                        temp['company'] = res['quoteResponse']['result'][i].get('longName')
+                        temp['quoteType'] = res['quoteResponse']['result'][i].get('quoteType')
+                        temp['currency'] = res['quoteResponse']['result'][i].get('currency')
+                        temp['stockPrice'] = res['quoteResponse']['result'][i].get('regularMarketPrice')
+                        temp['previousClose'] = res['quoteResponse']['result'][i].get('regularMarketPreviousClose')
+                        temp['bidSize'] = res['quoteResponse']['result'][i].get('bidSize')
+                        temp['askSize'] = res['quoteResponse']['result'][i].get('askSize')
+                        temp['trailingPE'] = res['quoteResponse']['result'][i].get('trailingPE')
+                        temp['forwardPE'] = res['quoteResponse']['result'][i].get('forwardPE')
+                        temp['marketCap'] = res['quoteResponse']['result'][i].get('marketCap')
+                        temp['fiftyTwoWeekLow'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekLow')
+                        temp['fiftyTwoWeekHigh'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekHigh')
+                        temp['fiftyTwoWeekRange'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekRange')
+                        temp['floatShares'] = res['quoteResponse']['result'][i].get('floatShares')
+                        temp['marketVolume'] = res['quoteResponse']['result'][i].get('regularMarketVolume')
+                        temp['priceToSales'] = res['quoteResponse']['result'][i].get('priceToSales')
+                        temp['revenue'] = res['quoteResponse']['result'][i].get('revenue')
+                        temp['pegRation'] = res['quoteResponse']['result'][i].get('pegRation')
+                        output.append(temp)
+
+                    # to check output in console
+                    # for elements in output:
+                        # for key, val in elements.items():
+                            # print(key,'->', val)
+                        # print()
+
+                    # context['tickers'] = tickers
+
+                else:
+                    print('in the error\n')
+                    # context['tickers'] = 'error...'
+                    # output.append({'error':'error...'})
+                    err = 'error...'
 
         except Exception as e:
             print('exception--->',e)
