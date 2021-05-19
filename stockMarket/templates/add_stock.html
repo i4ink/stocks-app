@@ -7,7 +7,7 @@
 <!-- <form action="{% url 'add_stock' %}" class="d-flex form-inline my-2 my-lg-0" method="POST"> -->
 <form action="{% url 'add_stock' %}" class="row g-2" method="POST" required >
     {% csrf_token %}
-    <input class="col-auto" id="txte" type="search"  placeholder="Add To Portfolio" aria-label="Search" name="ticker">
+    <input class="col-auto" id="txte" type="search"  placeholder="Enter Ticker Symbol" aria-label="Search" name="ticker">
     &nbsp;
     <button class="btn btnstyle btn-outline-secondary col-auto" onclick="return ValidateStock()" type="submit">Add</button>
 </form>
