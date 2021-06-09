@@ -15,6 +15,7 @@ def home(request):
 
     import requests
     import json
+    from numerize import numerize
 
 
     if request.method == 'POST':
@@ -27,7 +28,7 @@ def home(request):
         # visit this site to look for ticker symbol - https://www.marketwatch.com/tools/quotes/lookup.asp
 
         # e.g ticker = 'amzn,aapl,goog,fb'
-        querystring = {"region":"IN","symbols":ticker}
+        querystring = {"region":"US","symbols":ticker}
 
         headers = {
             'x-rapidapi-key': API_KEY,
@@ -57,14 +58,16 @@ def home(request):
                     temp['askSize'] = res['quoteResponse']['result'][i].get('askSize')
                     temp['trailingPE'] = res['quoteResponse']['result'][i].get('trailingPE')
                     temp['forwardPE'] = res['quoteResponse']['result'][i].get('forwardPE')
-                    temp['marketCap'] = res['quoteResponse']['result'][i].get('marketCap')
+                    # temp['marketCap'] = res['quoteResponse']['result'][i].get('marketCap')
+                    temp['marketCap'] = numerize.numerize(res['quoteResponse']['result'][i].get('marketCap'),4 )
                     temp['fiftyTwoWeekLow'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekLow')
                     temp['fiftyTwoWeekHigh'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekHigh')
                     temp['fiftyTwoWeekRange'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekRange')
                     temp['floatShares'] = res['quoteResponse']['result'][i].get('floatShares')
                     temp['marketVolume'] = res['quoteResponse']['result'][i].get('regularMarketVolume')
                     temp['priceToSales'] = res['quoteResponse']['result'][i].get('priceToSales')
-                    temp['revenue'] = res['quoteResponse']['result'][i].get('revenue')
+                    # temp['revenue'] = res['quoteResponse']['result'][i].get('revenue')
+                    temp['revenue'] = numerize.numerize(res['quoteResponse']['result'][i].get('revenue'),4 )
                     temp['pegRation'] = res['quoteResponse']['result'][i].get('pegRation')
                     temp['epsTrailingTwelveMonths'] = res['quoteResponse']['result'][i].get('epsTrailingTwelveMonths')
                     tickers.append(temp)
@@ -95,6 +98,8 @@ def about(request):
     return render(request, 'about.html', context)
 
 def add_stock(request):
+    from numerize import numerize
+
     if request.method == 'POST':
         form = StockForm(request.POST or None)
 
@@ -107,6 +112,7 @@ def add_stock(request):
         import requests
         import json
         tickers = Stock.objects.all()
+        print('tickers are -->',tickers)
         context = {}
 
 
@@ -127,7 +133,7 @@ def add_stock(request):
         # visit this site to look for ticker symbol - https://www.marketwatch.com/tools/quotes/lookup.asp
 
         # e.g ticker = 'amzn,aapl,goog,fb'
-        querystring = {"region":"IN","symbols":symbols}
+        querystring = {"region":"US","symbols":symbols}
 
         headers = {
             'x-rapidapi-key': API_KEY,
@@ -167,14 +173,16 @@ def add_stock(request):
                         temp['askSize'] = res['quoteResponse']['result'][i].get('askSize')
                         temp['trailingPE'] = res['quoteResponse']['result'][i].get('trailingPE')
                         temp['forwardPE'] = res['quoteResponse']['result'][i].get('forwardPE')
-                        temp['marketCap'] = res['quoteResponse']['result'][i].get('marketCap')
+                        # temp['marketCap'] = res['quoteResponse']['result'][i].get('marketCap')
+                        temp['marketCap'] = numerize.numerize(res['quoteResponse']['result'][i].get('marketCap'),4 )
                         temp['fiftyTwoWeekLow'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekLow')
                         temp['fiftyTwoWeekHigh'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekHigh')
                         temp['fiftyTwoWeekRange'] = res['quoteResponse']['result'][i].get('fiftyTwoWeekRange')
                         temp['floatShares'] = res['quoteResponse']['result'][i].get('floatShares')
                         temp['marketVolume'] = res['quoteResponse']['result'][i].get('regularMarketVolume')
                         temp['priceToSales'] = res['quoteResponse']['result'][i].get('priceToSales')
-                        temp['revenue'] = res['quoteResponse']['result'][i].get('revenue')
+                        # temp['revenue'] = res['quoteResponse']['result'][i].get('revenue')
+                        temp['revenue'] = numerize.numerize(res['quoteResponse']['result'][i].get('revenue'),4 )
                         temp['pegRation'] = res['quoteResponse']['result'][i].get('pegRation')
                         temp['epsTrailingTwelveMonths'] = res['quoteResponse']['result'][i].get('epsTrailingTwelveMonths')
                         output.append(temp)
