@@ -112,7 +112,6 @@ def add_stock(request):
         import requests
         import json
         tickers = Stock.objects.all()
-        print('tickers are -->',tickers)
         context = {}
 
 
