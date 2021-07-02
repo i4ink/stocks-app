@@ -1,2 +1,4 @@
 # stock market app
-* visit [website](https://stock-market-stats.herokuapp.com/)
+<!--  visit [website](https://stock-market-stats.herokuapp.com/)
+ -->
+ * website link in description
